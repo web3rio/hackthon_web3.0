@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ScoreToken Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.0/dist/web3.min.js"></script>
+  </head>
+  <body>
+    <h1>ScoreToken Example</h1>
+    <div id="score"></div>
+    <script>
+      const contractAddress = '0x6eeA7EdF0dE8E90af8B29416358742184c7b9C89';
+      const walletAddress = '0x711E6694659cbC7179920ba6A03F821429Ff004E';
+
+      const web3 = new Web3('https://sepolia.infura.io/v3/f0ac9ce86d1a45c4bd4927ff6e2fc6d5');
+
+      const scoreContract = new web3.eth.Contract([
+          {
+              "inputs": [],
+              "name": "getScore",
+              "outputs": [
+                  {
+                      "internalType": "uint256",
+                      "name": "",
+                      "type": "uint256"
+                  }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+          }
+      ], contractAddress);
+
+      scoreContract.methods.getScore().call({ from: walletAddress }).then(function(result) {
+          document.getElementById('score').innerHTML = 'Score: ' + result;
+      }).catch(function(error) {
+          console.error(error);
+      });
+    </script>
+  </body>
+</html>
